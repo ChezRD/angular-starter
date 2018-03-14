@@ -22,6 +22,7 @@ const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin')
 const PurifyPlugin = require('@angular-devkit/build-optimizer').PurifyPlugin;
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 
@@ -175,6 +176,13 @@ module.exports = function (env) {
         parallel: true,
         uglifyOptions: getUglifyOptions(supportES2015)
       }),
+
+      new CopyWebpackPlugin([{
+            from: helpers.root('src', '_redirects'),
+            to: "_redirects",
+            toType: "file"
+        }
+      ]),
 
       /**
        * Plugin: CompressionPlugin
